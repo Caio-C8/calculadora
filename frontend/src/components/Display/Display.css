@@ -1,0 +1,8 @@
+.display {
+  background-color: var(--bg-display);
+  border: none;
+  height: 70px;
+  border-radius: 16px;
+  padding: 10px;
+  font-size: 1.7rem;
+}

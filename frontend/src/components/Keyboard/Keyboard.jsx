@@ -1,6 +1,7 @@
 import React from "react";
+import "./Keyboard.css";
 
-import Button from "./Button";
+import Button from "../Button/Button";
 
 const Keyboard = ({ handleInput }) => {
   const buttons = [

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-import Calculator from "./components/Calculator";
-import Modal from "./components/Modal";
-import NavBar from "./components/NavBar";
+import Calculator from "./pages/Calculator/Calculator";
+import Modal from "./components/Modal/Modal";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   const [showModal, setShowModal] = useState(false);

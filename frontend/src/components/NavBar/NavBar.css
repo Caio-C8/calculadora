@@ -1,0 +1,35 @@
+.nav-bar {
+  border-left: 1px solid #c0c0c07e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  padding: 0 10px;
+}
+
+.nav-bar ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.nav-item {
+  filter: var(--img-filter);
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  opacity: 70%;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-item:hover {
+  transform: scale(1.08);
+  opacity: 100%;
+}
+
+.nav-btn {
+  all: unset;
+}

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
+import "./NavBar.css";
 
-import historyImg from "../assets/history.png";
-import tradeThemeImg from "../assets/tradeTheme.png";
+import historyImg from "../../assets/history.png";
+import tradeThemeImg from "../../assets/tradeTheme.png";
 
 const NavBar = ({ handleHistory, handleTradeTheme }) => {
   return (

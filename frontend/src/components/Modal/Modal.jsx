@@ -1,7 +1,8 @@
 import React from "react";
+import "./Modal.css";
 
-import copyPasteImg from "../assets/copyPaste.png";
-import deleteImg from "../assets/delete.png";
+import copyPasteImg from "../../assets/copyPaste.png";
+import deleteImg from "../../assets/delete.png";
 
 const Modal = ({ showModal, handleCloseModal }) => {
   if (!showModal) return null;

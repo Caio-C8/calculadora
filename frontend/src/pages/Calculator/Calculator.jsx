@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
+import "./Calculator.css";
 
-import Display from "./Display";
-import Keyboard from "./Keyboard";
+import Display from "../../components/Display/Display";
+import Keyboard from "../../components/Keyboard/Keyboard";
 
 import {
   addDigitToDisplay,
   deleteDigitFromDisplay,
   changeSign,
   expressionResult,
-} from "../logic";
+} from "../../features";
 
 const Calculator = () => {
   const [expression, setExpression] = useState(["0"]);
