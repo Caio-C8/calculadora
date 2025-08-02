@@ -12,6 +12,8 @@
   --hover-aux: #dadada;
   --img-filter: none;
   --bg-modal-fundo: #00000080;
+  --bg-btn-clean-history: #dddddd;
+  --bg-btn-clean-history-hover: #cccccc;
 }
 
 [data-theme="dark"] {
@@ -26,6 +28,8 @@
   --hover-aux: #808080;
   --img-filter: invert(1);
   --bg-modal-fundo: #ffffff80;
+  --bg-btn-clean-history: #444444;
+  --bg-btn-clean-history-hover: #333333;
 }
 
 * {
@@ -47,4 +51,21 @@ main {
   height: 100vh;
   display: flex;
   align-items: center;
+}
+
+.custom-loader {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, var(--cl-texto) 94%, #0000) top/8px
+      8px no-repeat,
+    conic-gradient(#0000 30%, var(--cl-texto));
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: s3 1s infinite linear;
+}
+
+@keyframes s3 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
