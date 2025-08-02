@@ -1,6 +1,11 @@
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 
-MONGO_URI = "mongodb+srv://caiomgf50:data0804base@calculadora.xmbxlon.mongodb.net/?retryWrites=true&w=majority&appName=calculadora"
+load_dotenv()
+
+MONGO_URI = os.getenv("MONGO_URI")
 client = MongoClient(MONGO_URI)
+
 db = client["calculator"]
 collection = db["history"]
