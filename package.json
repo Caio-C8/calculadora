@@ -1,0 +1,17 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "scripts": {
+    "dev:app": "uvicorn app.server:app --reload",
+    "dev:web": "cd web && npm run dev",
+    "setup:app": "pip install -r app/requirements.txt",
+    "setup:web": "cd web && npm install",
+    "dev": "concurrently \"npm run dev:app\" \"npm run dev:web\"",
+    "setup": "npm-run-all setup:app setup:web",
+    "start": "npm-run-all setup dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "npm-run-all": "^4.1.5"
+  }
+}
