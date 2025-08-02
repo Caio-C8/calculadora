@@ -26,8 +26,8 @@ npm run dev
 
 Depois de ter executado a aplicação abra nos links:
 
-- [Calculadora](http://localhost:5173) 
-- [Teste de API](localhost:8000/docs)
+- [Calculadora](http://localhost:5173).
+- [Teste de API](localhost:8000/docs).
 
 ## Pré-requisitos
 
