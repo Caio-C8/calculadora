@@ -6,7 +6,7 @@ export const addDigitToDisplay = (digit, expression) => {
   const parentheses = ["(", ")"];
   const lastPosition = expression.length - 1;
   const lastDigit = expression[lastPosition];
-  const displayExpression = expression.join("");
+  const displayExpression = expression.map(String).join("");
   let newDigit = "";
 
   // Caso a mensagem "Expressão inválida" estaja no visor, ela será substituída pelo novo valor
@@ -78,7 +78,7 @@ export const addDigitToDisplay = (digit, expression) => {
 export const deleteDigitFromDisplay = (expression) => {
   const lastPosition = expression.length - 1;
   let lastDigit = expression[lastPosition];
-  const displayExpression = expression.join("");
+  const displayExpression = expression.map(String).join("");
 
   // Verifica se a mensagem "Expressão inválida" está no visor e apaga ela completamente
   if (expression.length === 1 && displayExpression === "Expressão inválida") {

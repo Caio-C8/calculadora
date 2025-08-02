@@ -217,9 +217,9 @@ export const updateThousands = (number) => {
 
 // Retorna o resultado da expressão
 export const expressionResult = (expression) => {
-  const displayExpression = expression.join("");
+  const displayExpression = expression.map(String).join("");
 
-  if (displayExpression === "0") {
+  if (displayExpression === "0" || expression.length === 1) {
     return expression;
   }
 

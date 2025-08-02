@@ -64,19 +64,57 @@
   height: 350px;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.no-history {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.no-history h1 {
+  color: var(--cl-texto);
+  font-weight: normal;
+  font-size: 2.5rem;
+}
+
+.history-img {
+  filter: var(--img-filter);
+  height: 40px;
+  width: 40px;
+}
+
 .expressions {
   border-right: 1px solid #c0c0c07e;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
-  overflow-x: hidden;
   width: 50%;
   height: 100%;
   padding-right: 10px;
+  overflow: hidden;
 }
 
-.expressions p {
+.expression-list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.expression-list::-webkit-scrollbar {
+  background-color: var(--bg-main);
+}
+
+.expression-list p {
   color: var(--cl-texto);
   border-bottom: 1px solid #c0c0c07e;
   display: flex;
@@ -89,11 +127,28 @@
   white-space: normal;
   font-size: 1.6rem;
   width: 100%;
-  padding: 5px 0 5px 0;
+  padding: 5px 0;
 }
 
-.expressions::-webkit-scrollbar {
-  background-color: var(--bg-main);
+.btn-clean-history {
+  color: var(--cl-texto);
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 10px;
+  background-color: var(--bg-btn-clean-history);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  width: 100%;
+}
+
+.btn-clean-history:hover {
+  background-color: var(--bg-btn-clean-history-hover);
+}
+
+.btn-clean-history:active {
+  background-color: var(--bg-btn-clean-history);
+  transform: scale(0.98);
 }
 
 .results {
@@ -152,14 +207,44 @@
   opacity: 100%;
 }
 
+.result {
+  max-height: 300px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.result::-webkit-scrollbar {
+  display: none;
+}
+
 .result h2 {
-  color: var(--cl-texto);
-  font-weight: normal;
   font-size: 1.6rem;
 }
 
 .result h1 {
+  font-size: 3rem;
+}
+
+.result h1,
+.result h2 {
   color: var(--cl-texto);
   font-weight: normal;
-  font-size: 3rem;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  width: 100%;
+  text-align: end;
+}
+
+.no-expression {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.no-expression h3 {
+  color: var(--cl-texto);
+  font-weight: normal;
 }

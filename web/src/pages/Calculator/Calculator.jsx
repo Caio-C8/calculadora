@@ -11,28 +11,49 @@ import {
   expressionResult,
 } from "../../features";
 
-const Calculator = () => {
+import { insertHistory } from "../../services/useFastApi";
+
+const Calculator = ({ setRefreshHistory }) => {
   const [expression, setExpression] = useState(["0"]);
-  const displayValue = expression.join("");
+  const displayValue = expression.map(String).join("");
   const [isFocused, setIsFocused] = useState(false);
   const displayRef = useRef(null);
 
-  const handleInput = (digit) => {
+  const handleInput = async (digit) => {
     let newExpression = [...expression];
 
-    if (digit === "AC") {
-      newExpression = ["0"];
-    } else if (digit === "⌫") {
-      newExpression = deleteDigitFromDisplay(newExpression);
-    } else if (digit === "+/-") {
-      newExpression = changeSign(newExpression);
-    } else if (digit === "=") {
-      newExpression = expressionResult(newExpression);
-    } else {
-      newExpression = addDigitToDisplay(digit, newExpression);
-    }
+    if (digit === "=") {
+      const expressionString = newExpression.map(String).join("");
+      const resutlExpression = expressionResult(newExpression);
 
-    setExpression([...newExpression]);
+      setExpression([...resutlExpression]);
+
+      if (
+        newExpression.length !== 1 &&
+        resutlExpression[0] !== "Expressão inválida"
+      ) {
+        const bodyRequest = {
+          expression: expressionString,
+          result: resutlExpression[0],
+        };
+
+        const response = await insertHistory(bodyRequest);
+        setRefreshHistory(true);
+        console.log(response.message);
+      }
+    } else {
+      if (digit === "AC") {
+        newExpression = ["0"];
+      } else if (digit === "⌫") {
+        newExpression = deleteDigitFromDisplay(newExpression);
+      } else if (digit === "+/-") {
+        newExpression = changeSign(newExpression);
+      } else {
+        newExpression = addDigitToDisplay(digit, newExpression);
+      }
+
+      setExpression([...newExpression]);
+    }
   };
 
   useEffect(() => {

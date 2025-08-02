@@ -1,16 +1,64 @@
-import React from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import "./Modal.css";
 
 import copyPasteImg from "../../assets/copyPaste.png";
 import deleteImg from "../../assets/delete.png";
+import historyImg from "../../assets/history.png";
 
-const Modal = ({ showModal, handleCloseModal }) => {
+import { getHistory, deleteHistory } from "../../services/useFastApi";
+
+const Modal = ({
+  showModal,
+  handleCloseModal,
+  refreshHistory,
+  setRefreshHistory,
+}) => {
   if (!showModal) return null;
+  const [history, setHistory] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const cacheRef = useRef(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    if (!refreshHistory && cacheRef.current) {
+      setHistory(cacheRef.current);
+      setIsLoading(false);
+      return;
+    }
+
+    const loadHistory = async () => {
+      const response = await getHistory();
+      const newData = response.data || [];
+
+      setHistory(newData);
+      cacheRef.current = newData;
+      setSelected(null);
+      setRefreshHistory(false);
+      setIsLoading(false);
+    };
+
+    loadHistory();
+  }, [refreshHistory]);
 
   const handleCloseModalBackground = (e) => {
     if (e.target.classList.contains("modal-background")) {
       handleCloseModal();
     }
+  };
+
+  const handleDeleteHistory = async () => {
+    const confirm = window.confirm("Limpar todo o histórico?");
+
+    if (!confirm) return;
+
+    await deleteHistory();
+
+    setHistory([]);
+    cacheRef.current = null;
+    setSelected(null);
+    setIsLoading(false);
   };
 
   return (
@@ -27,51 +75,75 @@ const Modal = ({ showModal, handleCloseModal }) => {
         </div>
 
         <div className="modal-body">
-          <div className="expressions">
-            <p>10+5+9+8+7+6+5+4+7+8+9+9</p>
-            <p>10+5+9+8</p>
-            <p>10+5+9+8+7+6+5+4+7+8+9+9</p>
-            <p>10+5+9+8</p>
-            <p>10+5+9+8+7+6+5+4+7+8+9+9</p>
-            <p>10+5+9+8</p>
-            <p>10+5+9+8+7+6+5+4+7+8+9+9</p>
-            <p>10+5+9+8</p>
-            <p>10+5+9+8+7+6+5+4+7+8+9+9</p>
-            <p>10+5+9+8</p>
-            <p>10+5+9+8+7+6+5+4+7+8+9+9</p>
-            <p>10+5+9+8</p>
-            <p>10+5+9+8+7+6+5+4+7+8+9+9</p>
-            <p>10+5+9+8</p>
-            <p>10+5+9+8+7+6+5+4+7+8+9+9</p>
-            <p>10+5+9+8</p>
-            <p>10+5+9+8+7+6+5+4+7+8+9+9</p>
-            <p>10+5+9+8</p>
-          </div>
-
-          <div className="results">
-            <div className="btns">
-              <button className="btn-copy-paste">
-                <img
-                  className="img-copy-paste"
-                  src={copyPasteImg}
-                  alt="Copiar Resultado"
-                />
-              </button>
-
-              <button className="btn-delete">
-                <img
-                  className="img-bin"
-                  src={deleteImg}
-                  alt="Apagar Histórico"
-                />
-              </button>
+          {isLoading ? (
+            <div className="loading">
+              <div className="custom-loader"></div>
             </div>
+          ) : history.length > 0 ? (
+            <>
+              <div className="expressions">
+                <div className="expression-list">
+                  {history
+                    .slice()
+                    .sort(
+                      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                    )
+                    .map((calculation, index) => (
+                      <p key={index} onClick={() => setSelected(calculation)}>
+                        {calculation.expression}
+                      </p>
+                    ))}
+                </div>
 
-            <div className="result">
-              <h2>10+5+9+8</h2>
-              <h1>32</h1>
+                <div style={{ paddingTop: "10px", width: "100%" }}>
+                  <button
+                    className="btn-clean-history"
+                    onClick={handleDeleteHistory}
+                  >
+                    Limpar histórico
+                  </button>
+                </div>
+              </div>
+
+              <div className="results">
+                {selected ? (
+                  <>
+                    <div className="btns">
+                      <button className="btn-copy-paste">
+                        <img
+                          className="img-copy-paste"
+                          src={copyPasteImg}
+                          alt="Copiar Resultado"
+                        />
+                      </button>
+
+                      <button className="btn-delete">
+                        <img
+                          className="img-bin"
+                          src={deleteImg}
+                          alt="Apagar Histórico"
+                        />
+                      </button>
+                    </div>
+
+                    <div className="result">
+                      <h2>{selected.expression}</h2>
+                      <h1>{selected.result}</h1>
+                    </div>
+                  </>
+                ) : (
+                  <div className="no-expression">
+                    <h3>Selecione uma expressão</h3>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="no-history">
+              <img className="history-img" src={historyImg} alt="Histórico" />
+              <h1>Sem histórico</h1>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

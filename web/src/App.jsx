@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
+  const [refreshHistory, setRefreshHistory] = useState(false);
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "light";
   });
@@ -22,7 +23,7 @@ function App() {
   return (
     <>
       <main>
-        <Calculator />
+        <Calculator setRefreshHistory={setRefreshHistory} />
         <NavBar
           handleHistory={() => setShowModal(true)}
           handleTradeTheme={() =>
@@ -35,6 +36,8 @@ function App() {
       <Modal
         showModal={showModal}
         handleCloseModal={() => setShowModal(false)}
+        refreshHistory={refreshHistory}
+        setRefreshHistory={setRefreshHistory}
       />
     </>
   );
