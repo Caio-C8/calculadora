@@ -4,7 +4,7 @@ from datetime import datetime
 
 class CalculationIn(BaseModel):
     expression: str
-    result: float
+    result: str
 
 
 class Calculation(CalculationIn):
