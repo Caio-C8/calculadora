@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiFast = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: "calculator-api-76gc.onrender.com/",
 });
 
 export default apiFast;
