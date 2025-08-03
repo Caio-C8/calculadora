@@ -5,7 +5,11 @@ import copyPasteImg from "../../assets/copyPaste.png";
 import deleteImg from "../../assets/delete.png";
 import historyImg from "../../assets/history.png";
 
-import { getHistory, deleteHistory } from "../../services/useFastApi";
+import {
+  getHistory,
+  deleteHistory,
+  deleteCalculation,
+} from "../../services/useFastApi";
 
 const Modal = ({
   showModal,
@@ -59,6 +63,17 @@ const Modal = ({
     cacheRef.current = null;
     setSelected(null);
     setIsLoading(false);
+  };
+
+  const handleDeleteCalculation = async (calcId) => {
+    const confirm = window.confirm("Deletar este cálculo?");
+
+    if (!confirm) return;
+
+    await deleteCalculation(calcId);
+
+    setRefreshHistory(true);
+    setSelected(null);
   };
 
   return (
@@ -117,7 +132,10 @@ const Modal = ({
                         />
                       </button>
 
-                      <button className="btn-delete">
+                      <button
+                        className="btn-delete"
+                        onClick={() => handleDeleteCalculation(selected.id)}
+                      >
                         <img
                           className="img-bin"
                           src={deleteImg}

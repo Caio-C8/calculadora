@@ -11,7 +11,7 @@ import {
   expressionResult,
 } from "../../features";
 
-import { insertHistory } from "../../services/useFastApi";
+import { insertCalculation } from "../../services/useFastApi";
 
 const Calculator = ({ setRefreshHistory }) => {
   const [expression, setExpression] = useState(["0"]);
@@ -37,7 +37,7 @@ const Calculator = ({ setRefreshHistory }) => {
           result: resutlExpression[0],
         };
 
-        const response = await insertHistory(bodyRequest);
+        const response = await insertCalculation(bodyRequest);
         setRefreshHistory(true);
         console.log(response.message);
       }

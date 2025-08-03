@@ -12,9 +12,9 @@ export const getHistory = async () => {
   }
 };
 
-export const insertHistory = async (bodyRequest) => {
+export const deleteHistory = async () => {
   try {
-    const response = await apiFast.post("/history", bodyRequest);
+    const response = await apiFast.delete("/history");
 
     return response.data;
   } catch (error) {
@@ -24,9 +24,21 @@ export const insertHistory = async (bodyRequest) => {
   }
 };
 
-export const deleteHistory = async () => {
+export const insertCalculation = async (bodyRequest) => {
   try {
-    const response = await apiFast.delete("/history");
+    const response = await apiFast.post("/calculation", bodyRequest);
+
+    return response.data;
+  } catch (error) {
+    console.error("Erro no servidor: ", error);
+
+    throw error;
+  }
+};
+
+export const deleteCalculation = async (calcId) => {
+  try {
+    const response = await apiFast.delete(`/calculation/${calcId}`);
 
     return response.data;
   } catch (error) {
