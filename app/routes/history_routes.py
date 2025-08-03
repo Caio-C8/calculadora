@@ -1,18 +1,17 @@
 from fastapi import APIRouter
 
-from app.controllers.calculation_controller import (
+from app.controllers.history_controller import (
     get_history,
-    insert_calculation,
     delete_history,
 )
-from app.utils.response import build_response
-from app.models.calculation_model import CalculationIn
+from app.utils.response import build_response, ResponseModel
+
 
 history_router = APIRouter()
 
 
-@history_router.get("/")
-def get():
+@history_router.get("/", response_model=ResponseModel)
+def handle_get_history():
     try:
         data = get_history()
 
@@ -28,20 +27,8 @@ def get():
         )
 
 
-@history_router.post("/")
-def post(calc: CalculationIn):
-    try:
-        data = insert_calculation(calc)
-
-        return build_response("Cálculo adicionado", True, 201, data.model_dump())
-    except Exception as error:
-        return build_response(
-            "Erro interno no servidor", False, 500, {"error": str(error)}
-        )
-
-
-@history_router.delete("/")
-def delete():
+@history_router.delete("/", response_model=ResponseModel)
+def handle_delete_history():
     try:
         count = delete_history()
 
