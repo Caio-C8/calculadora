@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import platform
 
 from app.routes.history_routes import history_router
 from app.routes.calculation_routes import calculation_router
+
+print("Versão do Python: ", platform.python_version())
 
 app = FastAPI()
 
