@@ -1,14 +1,19 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 from app.routes.history_routes import history_router
 from app.routes.calculation_routes import calculation_router
 
 app = FastAPI()
 
+
+origins_env = os.environ.get("ALLOWED_ORIGINS", "")
+origins = [url.strip() for url in origins_env.split(",") if url.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
